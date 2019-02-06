@@ -33,23 +33,15 @@ const NSTimeInterval kFadeOutTime = 0.7;  // seconds
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _currentPosition = 0;
-        _finColors = [[NSMutableArray alloc] initWithCapacity:kNumberOfFins];
-
-        _isAnimating = NO;
-        _isFadingOut = NO;
-
-        // user setter, to generate all fin colors
-        self.color = [NSColor blackColor];
-        _backgroundColor = [NSColor clearColor];
-        _drawsBackground = NO;
-        
-        _displayedWhenStopped = YES;
-        _usesThreadedAnimation = YES;
-        
-        _indeterminate = YES;
-        _currentValue = 0.0;
-        _maxValue = 100.0;
+        [self _setup];
+    }
+    return self;
+}
+    
+- (instancetype)initWithCoder:(NSCoder *)decoder {
+    self = [super initWithCoder: decoder];
+    if (self) {
+        [self _setup];
     }
     return self;
 }
@@ -236,7 +228,29 @@ const NSTimeInterval kFadeOutTime = 0.7;  // seconds
 
 
 #pragma mark - Private
+    
+    
+- (void)_setup {
+    _currentPosition = 0;
+    _finColors = [[NSMutableArray alloc] initWithCapacity:kNumberOfFins];
+    
+    _isAnimating = NO;
+    _isFadingOut = NO;
+    
+    // user setter, to generate all fin colors
+    self.color = [NSColor blackColor];
+    _backgroundColor = [NSColor clearColor];
+    _drawsBackground = NO;
+    
+    _displayedWhenStopped = YES;
+    _usesThreadedAnimation = YES;
+    
+    _indeterminate = YES;
+    _currentValue = 0.0;
+    _maxValue = 100.0;
+}
 
+    
 - (void)updateFrameFromTimer:(NSTimer *)timer
 {
     // update the colors
